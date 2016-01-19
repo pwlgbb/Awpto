@@ -77,18 +77,22 @@ public class BigNumber {
 		BigNumber res = new BigNumber();
 
 		for (int i = 0; i < digits.length; i++) {
-			Map.Entry<Byte, Byte> tuple = multiplyDigits(this.digits[i], number.digits[i], c);
-			c = tuple.getValue();
+			for (int j = 0; j < digits.length; j++) {
+				Map.Entry<Byte, Byte> tuple = multiplyDigits(this.digits[i], number.digits[j], c);
+				c = tuple.getValue();
 
-			res.digits[i] = tuple.getKey();
+				res.digits[i + j] += tuple.getKey();
+			}
+			
+			res.digits[i] += c;
 		}
 
 		return res;
 	}
 
 	public Map.Entry<Byte, Byte> multiplyDigits(byte digit1, byte digit2, byte carry) {
-		byte r = (byte) ((digit1 * digit2) - ((digit1 * digit2) % 10));
-		byte c = (byte) ((digit1 * digit2) / 10);
+		byte r = (byte) ((digit1 * digit2 + carry) - ((digit1 * digit2 + carry) % 10));
+		byte c = (byte) ((digit1 * digit2 + carry) / 10);
 
 		Map.Entry<Byte, Byte> result = new AbstractMap.SimpleEntry<Byte, Byte>(r, c);
 
