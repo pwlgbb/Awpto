@@ -1,4 +1,4 @@
-package bignumbers;
+package main.java.bignumbers;
 
 import java.util.AbstractMap;
 import java.util.Map;
@@ -29,17 +29,28 @@ public class BigNumber {
 		BigNumber res = new BigNumber();
 
 		for (int i = 0; i < digits.length; i++) {
-			Map.Entry<Byte, Byte> tuple = addDigits(this.digits[i], number.digits[i], c);
-			c = tuple.getValue();
+			// jezeli suma jest < 10 nie ma przesuniecia
+			if (this.digits[i] + number.digits[i] < 10) {
+				Map.Entry<Byte, Byte> tuple = addDigits(this.digits[i], number.digits[i]);
 
-			res.digits[i] = tuple.getKey();
+				if (res.digits[i] == 0) {
+					res.digits[i] = tuple.getKey();
+				} else {
+					res.digits[i] = (byte) (res.digits[i] + tuple.getKey());
+				}
+			} else {
+				Map.Entry<Byte, Byte> tuple = addDigits(this.digits[i], number.digits[i]);
+
+				res.digits[i] = tuple.getKey();
+				res.digits[i + 1] = tuple.getValue();
+			}
 		}
 
 		return res;
 	}
 
-	public Map.Entry<Byte, Byte> addDigits(byte digit1, byte digit2, byte carry) {
-		byte r = (byte) ((digit1 + digit2) - ((digit1 + digit2) % 10));
+	public Map.Entry<Byte, Byte> addDigits(byte digit1, byte digit2) {
+		byte r = (byte) ((digit1 + digit2) % 10);
 		byte c = (byte) ((digit1 + digit2) / 10);
 
 		Map.Entry<Byte, Byte> result = new AbstractMap.SimpleEntry<Byte, Byte>(r, c);
@@ -114,9 +125,9 @@ public class BigNumber {
 
 		int ind = 0;
 
-		while (digits[ind] == 0) {
-			ind++;
-		}
+//		while (digits[ind] == 0) {
+//			ind++;
+//		}
 
 		for (int i = ind; i < digits.length; i++) {
 			sb.append(digits[i]);
