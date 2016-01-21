@@ -125,7 +125,7 @@ public class BigNumber {
 
 		int ind = digits.length - 1;
 
-		while (digits[ind] == 0) {
+		while (digits[ind] == 0 && ind > 0) {
 			ind--;
 		}
 

@@ -15,8 +15,7 @@ public class BigNumberTest extends Assert{
 
     @Before
     public void setUp() throws Exception {
-        bigNumber = new BigNumber("300");
-        bigNumber2 = new BigNumber("400");
+
     }
 
     @Test
@@ -36,12 +35,18 @@ public class BigNumberTest extends Assert{
     }
 
     @Test
-    public void substractTest_TC01() {
+    public void addTest_TC03() {
         bigNumber = new BigNumber("700");
         bigNumber2 = new BigNumber("300");
 
         assertEquals(this.bigNumber.add(bigNumber2).getValue(), "1000");
     }
 
+    @Test
+    public void addTest_TC04() {
+        bigNumber = new BigNumber("7000000000000");
+        bigNumber2 = new BigNumber("30773730000000");
 
+        assertEquals(this.bigNumber.add(bigNumber2).getValue(), "37773730000000");
+    }
 }
