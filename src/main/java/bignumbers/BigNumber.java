@@ -74,7 +74,7 @@ public class BigNumber {
 	}
 
 	public Map.Entry<Byte, Byte> substractDigits(byte digit1, byte digit2, byte carry) {
-		byte r = (byte) ((digit1 - digit2 - carry) - ((digit1 - digit2 - carry) % 10));
+		byte r = (byte) ((digit1 - digit2 - carry) % 10);
 		byte c = (byte) ((digit1 - digit2 - carry) / 10);
 
 		Map.Entry<Byte, Byte> result = new AbstractMap.SimpleEntry<Byte, Byte>(r, c);
