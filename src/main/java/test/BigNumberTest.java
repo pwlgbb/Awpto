@@ -32,7 +32,16 @@ public class BigNumberTest extends Assert{
         bigNumber = new BigNumber("700");
         bigNumber2 = new BigNumber("700");
 
-        assertEquals(this.bigNumber.add(bigNumber2).getValue().substring(0, 6), "004100");
+        assertEquals(this.bigNumber.add(bigNumber2).getValue(), "1400");
     }
+
+    @Test
+    public void substractTest_TC01() {
+        bigNumber = new BigNumber("700");
+        bigNumber2 = new BigNumber("300");
+
+        assertEquals(this.bigNumber.add(bigNumber2).getValue(), "1000");
+    }
+
 
 }

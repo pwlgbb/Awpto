@@ -123,13 +123,13 @@ public class BigNumber {
 	public String getValue() {
 		StringBuilder sb = new StringBuilder();
 
-		int ind = 0;
+		int ind = digits.length - 1;
 
-//		while (digits[ind] == 0) {
-//			ind++;
-//		}
+		while (digits[ind] == 0) {
+			ind--;
+		}
 
-		for (int i = ind; i < digits.length; i++) {
+		for (int i = ind; i >= 0; i--) {
 			sb.append(digits[i]);
 		}
 
