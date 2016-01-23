@@ -29,7 +29,6 @@ public class BigNumber {
 		BigNumber res = new BigNumber();
 
 		for (int i = 0; i < digits.length; i++) {
-			// jezeli suma jest < 10 nie ma przesuniecia
 			if (this.digits[i] + number.digits[i] < 10) {
 				Map.Entry<Byte, Byte> tuple = addDigits(this.digits[i], number.digits[i]);
 
@@ -63,19 +62,29 @@ public class BigNumber {
 
 		BigNumber res = new BigNumber();
 
-		for (int i = 0; i < digits.length; i++) {
-			Map.Entry<Byte, Byte> tuple = substractDigits(this.digits[i], number.digits[i], c);
-			c = tuple.getValue();
+		for (int i = digits.length - 1; i > 0; i--) {
+//			if (this.digits[i] + number.digits[i] < 10) {
+				Map.Entry<Byte, Byte> tuple = substractDigits(this.digits[i], number.digits[i], c);
 
-			res.digits[i] = tuple.getKey();
+//				if (res.digits[i] == 0) {
+//					res.digits[i] = tuple.getKey();
+//				} else {
+					res.digits[i] = (byte) (res.digits[i] + tuple.getKey());
+//				}
+//			} else {
+//				Map.Entry<Byte, Byte> tuple = substractDigits(this.digits[i], number.digits[i], c);
+//
+//				res.digits[i] = tuple.getKey();
+//				res.digits[i + 1] = tuple.getValue();
+//			}
 		}
 
 		return res;
 	}
 
 	public Map.Entry<Byte, Byte> substractDigits(byte digit1, byte digit2, byte carry) {
-		byte r = (byte) ((digit1 - digit2 - carry) % 10);
-		byte c = (byte) ((digit1 - digit2 - carry) / 10);
+		byte r = (byte) Math.abs((byte) ((digit1 - digit2 - carry) % 10));
+		byte c = (byte) ((Math.abs(digit1 - digit2)) > 0 ? 1 : 0);
 
 		Map.Entry<Byte, Byte> result = new AbstractMap.SimpleEntry<Byte, Byte>(r, c);
 
