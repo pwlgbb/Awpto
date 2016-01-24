@@ -113,7 +113,16 @@ public class BigNumberTest extends Assert{
     }
 
     @Test
-    public void substractTest_TC05() {
+    public void addDigitsTest_TC01() {
+        bigNumber = new BigNumber("100");
+        bigNumber2 = new BigNumber("90");
+
+        Map.Entry<Byte, Byte> entry = bigNumber.addDigits((byte) 3, (byte) 5);
+        assertEquals(8, entry.getKey().byteValue());
+    }
+
+    @Test
+    public void substractDigitsTest_TC01() {
         bigNumber = new BigNumber("100");
         bigNumber2 = new BigNumber("90");
 
