@@ -1,4 +1,4 @@
-package main.java.test;
+package test.java.bignumbers;
 
 import main.java.bignumbers.BigNumber;
 import org.junit.Assert;
@@ -19,6 +19,24 @@ public class BigNumberTest extends Assert{
     @Before
     public void setUp() throws Exception {
 
+    }
+
+    @Test
+    public void rangeTest_TC01() {
+        bigNumber = new BigNumber("700");
+
+        assertEquals(192, bigNumber.getDigitsLength());
+    }
+
+    @Test
+    public void rangeTest_TC02() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 1; i <= 20; i++) {
+            stringBuilder.append("1234567890");
+        }
+        bigNumber = new BigNumber(stringBuilder.toString());
+
+        assertEquals(192, bigNumber.getDigitsLength());
     }
 
     @Test
@@ -102,5 +120,56 @@ public class BigNumberTest extends Assert{
         Map.Entry<Byte, Byte> entry = bigNumber.substractDigits((byte) 3, (byte) 5, (byte) 0);
         assertEquals(2, entry.getKey().byteValue());
         assertEquals(1, entry.getValue().byteValue());
+    }
+
+    @Test
+    public void multiplyDigitsTest_TC01() {
+        bigNumber = new BigNumber();
+
+        Map.Entry<Byte,Byte> res=bigNumber.multiplyDigits((byte) 3, (byte) 5, (byte) 0);
+
+        assertEquals((byte) 5, res.getKey().byteValue());
+        assertEquals((byte) 1, res.getValue().byteValue());
+    }
+
+    @Test
+    public void multiplyTest_TC01() {
+        bigNumber = new BigNumber("10");
+        bigNumber2 = new BigNumber("11");
+
+        assertEquals("110", this.bigNumber.multiply(bigNumber2).getValue());
+    }
+
+    @Test
+    public void multiplyTest_TC02() {
+        bigNumber = new BigNumber("100");
+        bigNumber2 = new BigNumber("100");
+
+        assertEquals("10000", this.bigNumber.multiply(bigNumber2).getValue());
+    }
+
+    @Test
+    public void multiplyTest_TC03() {
+        bigNumber = new BigNumber("3384938493489");
+        bigNumber2 = new BigNumber("0");
+
+        assertEquals("0", this.bigNumber.multiply(bigNumber2).getValue());
+    }
+
+    @Test
+    @Ignore
+    public void multiplyTest_TC04() {
+        bigNumber = new BigNumber("1");
+        bigNumber2 = new BigNumber("3001");
+
+        assertEquals("3001", this.bigNumber.multiply(bigNumber2).getValue());
+    }
+
+    @Test
+    public void multiplyTest_TC05() {
+        bigNumber = new BigNumber("0");
+        bigNumber2 = new BigNumber("0");
+
+        assertEquals("0", this.bigNumber.multiply(bigNumber2).getValue());
     }
 }

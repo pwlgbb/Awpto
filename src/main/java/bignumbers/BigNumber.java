@@ -97,21 +97,23 @@ public class BigNumber {
 		BigNumber res = new BigNumber();
 
 		for (int i = 0; i < digits.length; i++) {
-			for (int j = 0; j < digits.length; j++) {
-				Map.Entry<Byte, Byte> tuple = multiplyDigits(this.digits[i], number.digits[j], c);
+			c = 0;
+
+			for (int j = i; (j + i) < PRECISION; j++) {
+				Map.Entry<Byte, Byte> tuple = multiplyDigits(this.digits[j], number.digits[i], c);
 				c = tuple.getValue();
 
 				res.digits[i + j] += tuple.getKey();
 			}
 			
-			res.digits[i] += c;
+//			res.digits[i] += c;
 		}
 
 		return res;
 	}
 
 	public Map.Entry<Byte, Byte> multiplyDigits(byte digit1, byte digit2, byte carry) {
-		byte r = (byte) ((digit1 * digit2 + carry) - ((digit1 * digit2 + carry) % 10));
+		byte r = (byte) ((digit1 * digit2 + carry) % 10);
 		byte c = (byte) ((digit1 * digit2 + carry) / 10);
 
 		Map.Entry<Byte, Byte> result = new AbstractMap.SimpleEntry<Byte, Byte>(r, c);
@@ -122,11 +124,21 @@ public class BigNumber {
 	public byte[] getFixedArray(Byte[] arr) {
 		byte[] res = new byte[PRECISION];
 
-		for (int i = arr.length - 1, j = 0; i >= 0; i--, j++) {
-			res[j] = arr[i];
+		if (arr.length <= PRECISION) {
+			for (int i = arr.length - 1, j = 0; i >= 0; i--, j++) {
+				res[j] = arr[i];
+			}
+		} else {
+			for (int i = PRECISION - 1, j = 0; i >= 0; i--, j++) {
+				res[j] = arr[i];
+			}
 		}
 
 		return res;
+	}
+
+	public int getDigitsLength() {
+		return digits.length;
 	}
 
 	public String getValue() {
